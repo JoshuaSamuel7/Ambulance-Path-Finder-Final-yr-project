@@ -1,0 +1,132 @@
+.register-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #a3c7d6 0%, #90a17d 100%);
+}
+
+.register-card {
+  background: #ffe1e1;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.register-card h1 {
+  color: #61764b;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 28px;
+}
+
+.subtitle {
+  color: #90a17d;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  color: #61764b;
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #c0c0c0;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #90a17d;
+  background-color: white;
+}
+
+.error-message {
+  background-color: #ffcccc;
+  color: #cc0000;
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-left: 4px solid #cc0000;
+}
+
+.success-message {
+  background-color: #ccffcc;
+  color: #009900;
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-left: 4px solid #009900;
+}
+
+.register-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #90a17d;
+  color: #ffe1e1;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.register-button:hover:not(:disabled) {
+  background-color: #7a8a69;
+}
+
+.register-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #61764b;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #90a17d;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .register-card {
+    margin: 20px;
+    max-width: 100%;
+  }
+
+  .register-card h1 {
+    font-size: 24px;
+  }
+}
