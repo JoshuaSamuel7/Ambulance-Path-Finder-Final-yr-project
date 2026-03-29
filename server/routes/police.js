@@ -35,19 +35,11 @@ router.get('/my-signals', verifyToken, checkRole(['police']), async (req, res) =
   }
 });
 
-// Get all traffic signals with distinct locations
 router.get('/locations', verifyToken, checkRole(['police']), async (req, res) => {
   try {
-    const signals = await TrafficSignal.aggregate([
-      {
-        $group: {
-          _id: '$location',
-          status: { $first: '$status' },
-          signalIds: { $push: '$_id' },
-        },
-      },
-    ]);
-
+    const signals = await TrafficSignal.find({})
+      .select('from to location status policeOfficerName coordinates')
+      .sort({ location: 1 });
     res.json({ locations: signals });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -29,11 +29,29 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    ambulanceVehicleId: { type: String, trim: true },
+    ambulanceModel: { type: String, trim: true },
+    driverPhone: { type: String, trim: true },
+    /** Chennai patrol post — used to match officers on emergency routes */
+    patrolLatitude: { type: Number },
+    patrolLongitude: { type: Number },
+    badgeNumber: { type: String, trim: true },
+    /** Chennai patrol post — GeoJSON Point format for geospatial queries */
+    patrolCoordinates: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point'
+      },
+      coordinates: {
+        type: [Number], // [longitude, latitude]
+        required: false
+      }
+    },
   },
   { timestamps: true }
 );
 
-// Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
@@ -47,7 +65,6 @@ userSchema.pre('save', async function (next) {
   }
 });
 
-// Method to compare passwords
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcryptjs.compare(enteredPassword, this.password);
 };

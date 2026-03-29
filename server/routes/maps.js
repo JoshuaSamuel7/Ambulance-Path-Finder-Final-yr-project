@@ -317,4 +317,36 @@ router.post('/alternative-routes', verifyToken, async (req, res) => {
   }
 });
 
+/** OSRM driving route — server-side proxy avoids browser CORS */
+router.get('/driving-route', verifyToken, async (req, res) => {
+  try {
+    const fromLat = parseFloat(req.query.fromLat);
+    const fromLng = parseFloat(req.query.fromLng);
+    const toLat = parseFloat(req.query.toLat);
+    const toLng = parseFloat(req.query.toLng);
+    if ([fromLat, fromLng, toLat, toLng].some((n) => Number.isNaN(n))) {
+      return res.status(400).json({ message: 'Valid fromLat, fromLng, toLat, toLng required' });
+    }
+    const url = `https://router.project-osrm.org/route/v1/driving/${fromLng},${fromLat};${toLng},${toLat}?overview=full&geometries=geojson`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      return res.status(502).json({ message: 'Routing service unavailable' });
+    }
+    const data = await response.json();
+    const route = data.routes?.[0];
+    if (!route) {
+      return res.status(404).json({ message: 'No route found' });
+    }
+    const coords = route.geometry?.coordinates || [];
+    const leafletPath = coords.map(([lng, lat]) => [lat, lng]);
+    res.json({
+      leafletPath,
+      distanceKm: Number(((route.distance || 0) / 1000).toFixed(2)),
+      durationMin: Math.round((route.duration || 0) / 60),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 export default router;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/apiClient';
-import '../styles/Register.css';
+import '../styles/Login.css';
 
 export default function Register() {
   const [formData, setFormData] = useState({

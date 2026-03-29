@@ -3,6 +3,7 @@ import { verifyToken, checkRole } from './auth.js';
 import User from '../models/User.js';
 import TrafficSignal from '../models/TrafficSignal.js';
 import Hospital from '../models/Hospital.js';
+import AmbulanceRequest from '../models/AmbulanceRequest.js';
 
 const router = express.Router();
 
@@ -182,6 +183,37 @@ router.get('/stats', verifyToken, checkRole(['admin']), async (req, res) => {
         trafficSignals,
         totalHospitals,
       },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get all ambulance requests with details for system map
+router.get('/requests/all', verifyToken, checkRole(['admin']), async (req, res) => {
+  try {
+    const requests = await AmbulanceRequest.find()
+      .populate('ambulanceDriver', 'name email')
+      .populate('destinationHospital', 'hospitalName coordinates')
+      .sort({ requestedAt: -1 });
+
+    // Get all police officers with their signals
+    const policeOfficers = await User.find({ role: 'police' })
+      .select('name email patrolCoordinates');
+
+    // Get all hospitals
+    const hospitalsData = await Hospital.find()
+      .select('hospitalName coordinates availableBeds acceptingPatients');
+
+    // Get all traffic signals
+    const signals = await TrafficSignal.find()
+      .select('location coordinates status');
+
+    res.json({
+      requests,
+      policeOfficers,
+      hospitals: hospitalsData,
+      signals,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

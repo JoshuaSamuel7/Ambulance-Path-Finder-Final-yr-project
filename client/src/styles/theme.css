@@ -1,0 +1,304 @@
+/* Emergency Coordination — professional dark-surface UI */
+:root {
+  --color-bg: #0c1118;
+  --color-surface: #141b26;
+  --color-surface-elevated: #1a2332;
+  --color-border: rgba(148, 163, 184, 0.12);
+  --color-text: #e8edf4;
+  --color-muted: #94a3b8;
+  --color-accent: #0ea5e9;
+  --color-accent-dim: rgba(14, 165, 233, 0.15);
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Outfit', var(--font-sans);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+body.app-body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100%;
+}
+
+#root {
+  min-height: 100%;
+}
+
+/* Auth pages keep their own light theme via .auth-page */
+.auth-page {
+  --color-bg: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-text: #0f172a;
+  --color-muted: #64748b;
+}
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(14, 165, 233, 0.12), transparent),
+    radial-gradient(800px 400px at 90% 0%, rgba(99, 102, 241, 0.08), transparent), var(--color-bg);
+}
+
+.shell-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(20, 27, 38, 0.85);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.shell-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.shell-brand h1 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.shell-brand p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  max-width: 42ch;
+  line-height: 1.45;
+}
+
+.shell-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge-role {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+}
+
+.btn-ghost {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-ghost:hover {
+  background: var(--color-surface-elevated);
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+.shell-main {
+  flex: 1;
+  padding: 1.25rem 0rem 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 960px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.35rem;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+  color: var(--color-text);
+}
+
+.card .lead {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.stat {
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+}
+
+.stat .label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  margin-bottom: 0.25rem;
+}
+
+.stat .value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.form-stack label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 0.75rem;
+}
+
+.form-stack input,
+.form-stack select,
+.form-stack textarea {
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.form-stack textarea {
+  resize: vertical;
+  min-height: 64px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 560px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-primary {
+  margin-top: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tabs button {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+  border-color: rgba(14, 165, 233, 0.4);
+}
+
+.history-item {
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  margin-bottom: 0.5rem;
+  background: var(--color-surface-elevated);
+}
+
+.sev {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sev-critical {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+.sev-high {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+}
+.sev-medium {
+  background: rgba(234, 179, 8, 0.15);
+  color: #fde047;
+}
+.sev-low {
+  background: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+}

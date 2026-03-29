@@ -12,6 +12,17 @@ const hospitalSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    coordinates: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point'
+      },
+      coordinates: {
+        type: [Number], // [longitude, latitude]
+        required: true
+      }
+    },
     discordUsername: {
       type: String,
       required: true,
@@ -39,6 +50,9 @@ const hospitalSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// GeoJSON index
+hospitalSchema.index({ coordinates: '2dsphere' });
 
 const Hospital = mongoose.model('Hospital', hospitalSchema);
 

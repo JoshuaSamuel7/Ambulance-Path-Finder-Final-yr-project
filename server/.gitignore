@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Build output
+dist/
+build/
+
+# Cache
+.cache/
+
+# Coverage
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Optional: ignore uploads (if storing locally)
+uploads/

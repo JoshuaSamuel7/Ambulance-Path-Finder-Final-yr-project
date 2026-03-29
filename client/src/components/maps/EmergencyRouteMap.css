@@ -1,0 +1,360 @@
+.em-map-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: #0f1419;
+  min-height: 520px;
+  min-width: 500px;
+}
+
+.em-map-wrap .leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  min-height: 420px;
+  z-index: 0;
+  font-family: inherit;
+  background: #0f1419;
+}
+
+/* ─── Legend ────────────────────────────────── */
+.em-map-legend {
+  position: absolute;
+  bottom: 14px;
+  left: 12px;
+  z-index: 500;
+  width: min(195px, calc(100% - 24px));
+  background: rgba(8, 12, 20, 0.9);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 0.65rem;
+  color: #e2e8f0;
+  box-shadow: 
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+.em-legend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.em-legend-header h4 {
+  margin: 0;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a5b4fc;
+  font-weight: 700;
+}
+
+.em-legend-content {
+  margin-top: 10px;
+  animation: slideDown 0.2s ease-out forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Legend Rows ──────────────────────────── */
+.em-legend-section-title {
+  font-size: 0.52rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #64748b;
+  font-weight: 700;
+  margin: 6px 0 4px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.em-legend-section-title:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.em-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 3px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.em-legend-row:hover {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+/* ─── Marker Swatches (in legend) ─────────── */
+.em-legend-marker {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.em-legend-marker.marker-pickup {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: 1.5px solid rgba(255,255,255,0.7);
+  font-size: 7px;
+  box-shadow: 0 0 4px rgba(16,185,129,0.5);
+}
+
+.em-legend-marker.marker-hospital {
+  width: 16px; height: 16px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  border: 1.5px solid rgba(255,255,255,0.7);
+  font-size: 7px;
+  box-shadow: 0 0 4px rgba(239,68,68,0.5);
+}
+
+.em-legend-marker.marker-route {
+  width: 24px; height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  box-shadow: 0 0 8px rgba(99,102,241,0.4);
+}
+
+.em-legend-marker.marker-signal-green {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4ade80, #15803d);
+  border: 1.5px solid rgba(255,255,255,0.5);
+  font-size: 7px;
+  box-shadow: 0 0 5px rgba(74,222,128,0.5);
+}
+
+.em-legend-marker.marker-signal-red {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f87171, #991b1b);
+  border: 1.5px solid rgba(255,255,255,0.5);
+  font-size: 7px;
+  box-shadow: 0 0 5px rgba(248,113,113,0.5);
+}
+
+.em-legend-marker.marker-police {
+  width: 16px; height: 16px;
+  background: linear-gradient(135deg, #818cf8, #4338ca);
+  border: 1.5px solid rgba(255,255,255,0.6);
+  font-size: 7px;
+  box-shadow: 0 0 5px rgba(129,140,248,0.5);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.em-legend-label {
+  font-size: 0.62rem;
+  color: #cbd5e1;
+  line-height: 1.2;
+}
+
+/* ─── Stats Grid ──────────────────────────── */
+.em-legend-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.em-stat-pill {
+  text-align: center;
+  padding: 3px 2px;
+  border-radius: 5px;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.18);
+}
+
+.em-stat-pill strong {
+  display: block;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.em-stat-pill span {
+  font-size: 0.48rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── Toggle Controls ─────────────────────── */
+.em-legend-toggles {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.em-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #cbd5e1;
+  font-size: 0.72rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.em-toggle-label:hover {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.em-toggle-switch {
+  position: relative;
+  width: 32px; height: 16px;
+  flex-shrink: 0;
+}
+
+.em-toggle-switch input {
+  opacity: 0;
+  width: 0; height: 0;
+}
+
+.em-toggle-track {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 10px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.em-toggle-track::after {
+  content: '';
+  position: absolute;
+  left: 2px; top: 2px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.em-toggle-switch input:checked + .em-toggle-track {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+}
+
+.em-toggle-switch input:checked + .em-toggle-track::after {
+  transform: translateX(16px);
+}
+
+.em-toggle-text {
+  flex: 1;
+}
+
+.em-toggle-count {
+  font-size: 0.65rem;
+  color: #64748b;
+  margin-left: auto;
+}
+
+/* ─── Map Markers ─────────────────────────── */
+.leaflet-div-icon.em-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.em-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Pickup — Green circle with pulse */
+.em-pin-pickup {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #10b981, #047857);
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 2px 12px rgba(16, 185, 129, 0.5),
+    0 0 0 4px rgba(16, 185, 129, 0.2);
+  font-size: 14px;
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0%, 100% { box-shadow: 0 2px 12px rgba(16,185,129,0.5), 0 0 0 4px rgba(16,185,129,0.2); }
+  50% { box-shadow: 0 2px 12px rgba(16,185,129,0.5), 0 0 0 10px rgba(16,185,129,0.08); }
+}
+
+/* Hospital — Red rounded-square */
+.em-pin-hosp {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #ef4444, #991b1b);
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 2px 12px rgba(239, 68, 68, 0.5),
+    0 0 0 4px rgba(239, 68, 68, 0.2);
+  font-size: 14px;
+}
+
+/* Police — Hexagonal badge shape */
+.em-pin-police {
+  width: 30px; height: 30px;
+  font-size: 10px;
+  background: linear-gradient(145deg, #818cf8, #4338ca);
+  border: none;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  box-shadow: 0 2px 10px rgba(129, 140, 248, 0.5);
+  filter: drop-shadow(0 2px 6px rgba(99, 102, 241, 0.5));
+}
+
+/* Signal — Green/Red traffic light style */
+.em-pin-signal {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  font-size: 13px;
+  border: 2.5px solid rgba(255, 255, 255, 0.8);
+}
+
+.em-pin-signal.free {
+  background: radial-gradient(circle at 35% 35%, #4ade80, #15803d);
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.6), 0 0 3px rgba(74, 222, 128, 0.3);
+}
+
+.em-pin-signal.busy {
+  background: radial-gradient(circle at 35% 35%, #f87171, #991b1b);
+  box-shadow: 0 0 10px rgba(248, 113, 113, 0.6), 0 0 3px rgba(248, 113, 113, 0.3);
+}
+
+/* Leaflet popup overrides */
+.em-map-wrap .leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  color: #e2e8f0;
+  border-radius: 10px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  font-size: 0.8rem;
+}
+
+.em-map-wrap .leaflet-popup-tip {
+  background: rgba(15, 23, 42, 0.95);
+}

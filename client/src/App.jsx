@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login';
 import Register from './components/Register';
 import AmbulanceDashboard from './components/AmbulanceDashboard';
+import DispatchedRoutePage from './components/DispatchedRoutePage';
 import PoliceDashboard from './components/PoliceDashboard';
 import HospitalDashboard from './components/HospitalDashboard';
 import AdminDashboard from './components/AdminDashboard';
@@ -10,6 +11,8 @@ import AmbulanceMapPage from './components/AmbulanceMapPage';
 import TrafficMapPage from './components/TrafficMapPage';
 import HospitalMapPage from './components/HospitalMapPage';
 import './App.css';
+import { initializeSocket } from './api/socket';
+import { Toaster } from 'react-hot-toast';
 
 // Protected Route Component
 function ProtectedRoute({ children, requiredRole }) {
@@ -29,12 +32,14 @@ function ProtectedRoute({ children, requiredRole }) {
 
 function App() {
   useEffect(() => {
-    // Check environment configuration
-    console.log('API URL:', import.meta.env.VITE_API_URL || 'http://localhost:5000/api');
+    if (localStorage.getItem('authToken')) {
+      initializeSocket();
+    }
   }, []);
 
   return (
     <Router>
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -44,6 +49,15 @@ function App() {
           element={
             <ProtectedRoute requiredRole="ambulance">
               <AmbulanceDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dispatch/route"
+          element={
+            <ProtectedRoute requiredRole="ambulance">
+              <DispatchedRoutePage />
             </ProtectedRoute>
           }
         />

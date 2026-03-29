@@ -1,99 +1,157 @@
-.login-container {
-  height: 100vh;
-  width: 100%;
+.auth-page {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #a3c7d6 0%, #90a17d 100%);
+  padding: 1.5rem;
+  background: linear-gradient(160deg, #0c4a6e 0%, #0c1118 45%, #1e1b4b 100%);
 }
 
-.login-card {
-  background: #ffe1e1;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.auth-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  background: rgba(20, 27, 38, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 16px;
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
 }
 
-.login-card h1 {
-  color: #61764b;
-  margin-bottom: 30px;
-  text-align: center;
-  font-size: 24px;
+.login-container,
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(160deg, #0c4a6e 0%, #0c1118 45%, #1e1b4b 100%);
+}
+
+.login-card,
+.register-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(20, 27, 38, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 16px;
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+
+.auth-card h1,
+.login-card h1,
+.register-card h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin: 0 0 1.5rem;
+  line-height: 1.45;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
 }
 
 .form-group label {
-  color: #61764b;
-  font-weight: bold;
-  margin-bottom: 8px;
-  font-size: 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+  margin-bottom: 0.35rem;
 }
 
-.form-group input {
-  padding: 10px 12px;
-  border: 1px solid #c0c0c0;
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: #f9f9f9;
+.form-group input,
+.form-group select {
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: #0c1118;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
   outline: none;
-  border-color: #90a17d;
-  background-color: white;
+  border-color: #0ea5e9;
+  background-color: #0c1118;
+  color: #f1f5f9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
 }
 
 .error-message {
-  background-color: #ffcccc;
-  color: #cc0000;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  font-size: 14px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fecaca;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
 }
 
-.login-button {
+.success-message {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #86efac;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.login-button,
+.register-button {
   width: 100%;
-  padding: 12px;
-  background-color: #90a17d;
-  color: #ffe1e1;
+  margin-top: 0.25rem;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.login-button:hover:not(:disabled) {
-  background-color: #7a8a69;
+.login-button:hover:not(:disabled),
+.register-button:hover:not(:disabled) {
+  filter: brightness(1.05);
 }
 
-.login-button:disabled {
-  opacity: 0.6;
+.login-button:disabled,
+.register-button:disabled {
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
-.register-link {
+.register-link,
+.login-link {
   text-align: center;
-  margin-top: 15px;
-  color: #61764b;
-  font-size: 14px;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  color: #94a3b8;
 }
 
-.register-link a {
-  color: #90a17d;
+.register-link a,
+.login-link a {
+  color: #38bdf8;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: bold;
 }
 
-.register-link a:hover {
+.register-link a:hover,
+.login-link a:hover {
   text-decoration: underline;
 }

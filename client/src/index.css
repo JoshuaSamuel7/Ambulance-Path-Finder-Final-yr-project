@@ -12,7 +12,6 @@ body,
 }
 
 body {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
@@ -27,21 +26,16 @@ select,
 textarea {
   font-family: inherit;
 }
-}
-button:focus,
+
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.leaflet-tile-pane img {
+  max-width: none !important;
+}
+
+a {
+  color: inherit;
 }

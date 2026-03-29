@@ -44,9 +44,10 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h1>Ambulance Alerting System</h1>
+    <div className="login-container auth-page">
+      <div className="login-card auth-card">
+        <h1>Ambulance Path Finder</h1>
+        <p className="subtitle">Sign in to access your role dashboard — ambulance, police, hospital, or admin.</p>
         <form onSubmit={handleLogin}>
           {error && <div className="error-message">{error}</div>}
 

@@ -1,21 +1,188 @@
-* {
-  margin: 0;
-  padding: 0;
+/* Legacy admin / map pages may still reference small helpers */
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tab-button {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: var(--color-surface, #141b26);
+  color: var(--color-muted, #94a3b8);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  border-color: rgba(14, 165, 233, 0.4);
+}
+
+.admin-content {
+  color: var(--color-text, #e8edf4);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--color-surface, #141b26);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.stat-card h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted, #94a3b8);
+  margin-bottom: 0.5rem;
+}
+
+.stat-number {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+input{
+  background-color: #141b26;
+  color: #e8edf4;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  &:focus{
+    border-color: #38bdf8;
+    background-color: #141b26;
+    color: #e8edf4;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  }
+  &:hover{
+    border-color: rgba(148, 163, 184, 0.3);
+  }
+  &:disabled{
+    background-color: rgba(148, 163, 184, 0.1);
+    color: rgba(148, 163, 184, 0.5);
+    border-color: rgba(148, 163, 184, 0.1);
+    cursor: not-allowed;
+  }
+  &:placeholder{
+    color: rgba(148, 163, 184, 0.5);
+  }
+  &:invalid{
+    border-color: #ef4444;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+  }
+  &:valid{
+    border-color: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+  }
+  &:focus-visible{
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  }
+  &:focus-within{
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  }
+  &:focus-visible{
+    outline: none;
+  }
+}
+input::placeholder{
+  color: #94a3b8;
+}
+input:focus{
+  background-color: #141b26;
+  color: #e8edf4;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+input:hover{
+  background-color: #141b26;
+  color: #e8edf4;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+input:active{
+  background-color: #141b26;
+  color: #e8edf4;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+input:disabled{
+  background-color: #141b26;
+  color: #e8edf4;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  cursor: not-allowed;
+}
+input {
+  background-color: #141b26;
+  color: #e8edf4;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  width: 100%;
+  outline: none;
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
-  height: 100%;
-  width: 100%;
+/* ✅ Focus */
+input:focus {
+  background-color: #141b26!important;
+  color: #e8edf4!important;
+  border-color: #38bdf8!important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2)!important;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ✅ Placeholder */
+input::placeholder {
+  color: #94a3b8;
 }
 
+/* ✅ Disabled */
+input:disabled {
+  background-color: rgba(148, 163, 184, 0.1);
+  color: rgba(148, 163, 184, 0.5);
+  cursor: not-allowed;
+}
+
+/* ✅ Invalid */
+input:invalid {
+  border-color: #ef4444;
+}
+
+/* ✅ Valid */
+input:valid {
+  border-color: #22c55e;
+}
+select:focus{
+  background-color: #141b26!important;
+  color: #e8edf4!important;
+  border-color: #38bdf8!important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2)!important;
+}
+select:hover{
+  background-color: #141b26!important;
+  color: #e8edf4!important;
+  border-color: #38bdf8!important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2)!important;
+}

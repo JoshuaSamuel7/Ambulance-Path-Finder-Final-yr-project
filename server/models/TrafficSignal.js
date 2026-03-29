@@ -17,6 +17,17 @@ const trafficSignalSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    coordinates: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point'
+      },
+      coordinates: {
+        type: [Number], // [longitude, latitude]
+        required: true
+      }
+    },
     policeOfficerName: {
       type: String,
       required: true,
@@ -40,6 +51,9 @@ const trafficSignalSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// GeoJSON index
+trafficSignalSchema.index({ coordinates: '2dsphere' });
 
 const TrafficSignal = mongoose.model('TrafficSignal', trafficSignalSchema);
 

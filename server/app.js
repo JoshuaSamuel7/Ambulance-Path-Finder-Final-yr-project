@@ -12,6 +12,7 @@ import policeRoutes from './routes/police.js';
 import hospitalRoutes from './routes/hospital.js';
 import adminRoutes from './routes/admin.js';
 import mapRoutes from './routes/maps.js';
+import requestsRoutes from './routes/requests.js';
 
 dotenv.config();
 
@@ -56,6 +57,7 @@ app.use('/api/police', policeRoutes);
 app.use('/api/hospital', hospitalRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/maps', mapRoutes);
+app.use('/api/requests', requestsRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -111,5 +113,8 @@ const PORT = process.env.PORT || 5000;
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Export getIO function for routes to access socket.io
+export const getIO = () => io;
 
 export default app;

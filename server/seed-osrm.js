@@ -240,7 +240,34 @@ const seedDatabase = async () => {
     await AmbulanceRoute.deleteMany({});
     console.log('Cleared existing data');
 
-    // Create test users - expanded with more police officers and hospital staff
+    // Create test users — 2 ambulance + 18 police (3 per route) + 5 hospital + 1 admin
+    const OFFICER_NAMES = [
+      // Route 1: Central Railway Station → Apollo
+      { name: 'Officer Priya Kumar', badge: 'CHN-101', email: 'officer1@test.com' },
+      { name: 'Officer Ravi Shankar', badge: 'CHN-102', email: 'officer2@test.com' },
+      { name: 'Officer Deepa Nair', badge: 'CHN-103', email: 'officer3@test.com' },
+      // Route 2: Anna Salai → Fortis
+      { name: 'Officer Arun Prasad', badge: 'CHN-201', email: 'officer4@test.com' },
+      { name: 'Officer Kavitha Raj', badge: 'CHN-202', email: 'officer5@test.com' },
+      { name: 'Officer Suresh Babu', badge: 'CHN-203', email: 'officer6@test.com' },
+      // Route 3: Nungambakkam → Dr. Mehta's
+      { name: 'Officer Meena Lakshmi', badge: 'CHN-301', email: 'officer7@test.com' },
+      { name: 'Officer Vijay Kumar', badge: 'CHN-302', email: 'officer8@test.com' },
+      { name: 'Officer Anitha Devi', badge: 'CHN-303', email: 'officer9@test.com' },
+      // Route 4: Besant Nagar → MIOT
+      { name: 'Officer Karthik Raman', badge: 'CHN-401', email: 'officer10@test.com' },
+      { name: 'Officer Shalini Iyer', badge: 'CHN-402', email: 'officer11@test.com' },
+      { name: 'Officer Mohan Das', badge: 'CHN-403', email: 'officer12@test.com' },
+      // Route 5: T. Nagar → Billroth
+      { name: 'Officer Lalitha Sundaram', badge: 'CHN-501', email: 'officer13@test.com' },
+      { name: 'Officer Ganesh Murthy', badge: 'CHN-502', email: 'officer14@test.com' },
+      { name: 'Officer Revathi Krishnan', badge: 'CHN-503', email: 'officer15@test.com' },
+      // Route 6: Velachery → Apollo
+      { name: 'Officer Senthil Nathan', badge: 'CHN-601', email: 'officer16@test.com' },
+      { name: 'Officer Divya Ramesh', badge: 'CHN-602', email: 'officer17@test.com' },
+      { name: 'Officer Prakash Jeyaraman', badge: 'CHN-603', email: 'officer18@test.com' },
+    ];
+
     const allUsersData = [
       {
         name: 'Ambulance Driver 1',
@@ -254,100 +281,43 @@ const seedDatabase = async () => {
         password: 'TestPass123',
         role: 'ambulance',
       },
-      // Police officers with patrol coordinates - all in Chennai
-      {
-        name: 'Officer Priya Kumar',
-        email: 'officer1@test.com',
+      // 18 Police officers — coords will be set per-route after OSRM fetch
+      ...OFFICER_NAMES.map(o => ({
+        name: o.name,
+        email: o.email,
         password: 'TestPass123',
         role: 'police',
-        badgeNumber: 'CHN-001',
-        patrolCoordinates: {
-          type: 'Point',
-          coordinates: [80.2704, 13.0832] // Central Railway Station
-        }
-      },
+        badgeNumber: o.badge,
+        patrolLatitude: null,
+        patrolLongitude: null,
+      })),
+      // Hospital staff — indices 20..24
       {
-        name: 'Officer Rajesh Verma',
-        email: 'officer2@test.com',
-        password: 'TestPass123',
-        role: 'police',
-        badgeNumber: 'CHN-002',
-        patrolCoordinates: {
-          type: 'Point',
-          coordinates: [80.2431, 13.0389] // Anna Salai, Teynampet
-        }
-      },
-      {
-        name: 'Officer Vikram Patel',
-        email: 'officer3@test.com',
-        password: 'TestPass123',
-        role: 'police',
-        badgeNumber: 'CHN-003',
-        patrolCoordinates: {
-          type: 'Point',
-          coordinates: [80.2341, 13.0441] // Nungambakkam
-        }
-      },
-      {
-        name: 'Officer Neha Singh',
-        email: 'officer4@test.com',
-        password: 'TestPass123',
-        role: 'police',
-        badgeNumber: 'CHN-004',
-        patrolCoordinates: {
-          type: 'Point',
-          coordinates: [80.2649, 12.9898] // Besant Nagar Beach
-        }
-      },
-      {
-        name: 'Officer Amit Sharma',
-        email: 'officer5@test.com',
-        password: 'TestPass123',
-        role: 'police',
-        badgeNumber: 'CHN-005',
-        patrolCoordinates: {
-          type: 'Point',
-          coordinates: [80.2355, 13.0496] // T. Nagar Market
-        }
-      },
-      {
-        name: 'Officer Sanjay Kumar',
-        email: 'officer6@test.com',
-        password: 'TestPass123',
-        role: 'police',
-        badgeNumber: 'CHN-006',
-        patrolCoordinates: {
-          type: 'Point',
-          coordinates: [80.2270, 12.9689] // Velachery
-        }
-      },
-      // Hospital staff - one per hospital
-      {
-        name: 'Dr. Rajesh Kumar - Apollo Hospitals',
+        name: 'Dr. Sarah Johnson - City Hospital',
         email: 'hospital-bangalore@test.com',
         password: 'TestPass123',
         role: 'hospital',
       },
       {
-        name: 'Dr. Ananya Sharma - Fortis Malar Hospital',
+        name: 'Dr. Michael Chen - St. Mary Medical Center',
         email: 'hospital-chennai@test.com',
         password: 'TestPass123',
         role: 'hospital',
       },
       {
-        name: 'Dr. Venkat Krishnan - Dr. Mehta\'s Hospitals',
+        name: 'Dr. Jennifer Brown - Emergency Care Hospital',
         email: 'hospital-delhi@test.com',
         password: 'TestPass123',
         role: 'hospital',
       },
       {
-        name: 'Dr. Harini Iyer - MIOT International',
+        name: 'Dr. Robert Williams - Metropolitan General Hospital',
         email: 'hospital-mumbai@test.com',
         password: 'TestPass123',
         role: 'hospital',
       },
       {
-        name: 'Dr. Suresh Reddy - Billroth Hospitals',
+        name: 'Dr. Lisa Anderson - Lakeside Trauma Center',
         email: 'hospital-indore@test.com',
         password: 'TestPass123',
         role: 'hospital',
@@ -380,42 +350,87 @@ const seedDatabase = async () => {
         availableBeds: [45, 62, 28, 78, 15][index], // Varying bed availability
         discordUsername: hosp.name.toLowerCase().replace(/\s+/g, '-'),
         coordinatorName: [
-          'Dr. Rajesh Kumar',
-          'Dr. Ananya Sharma',
-          'Dr. Venkat Krishnan',
-          'Dr. Harini Iyer',
-          'Dr. Suresh Reddy',
+          'Dr. Sarah Johnson',
+          'Dr. Michael Chen',
+          'Dr. Jennifer Brown',
+          'Dr. Robert Williams',
+          'Dr. Lisa Anderson',
         ][index],
-        createdBy: users[8 + index]._id, // Hospital staff users are at indices 8-12
+        createdBy: users[20 + index]._id, // Hospital staff users are at indices 20-24
         acceptingPatients: index !== 3, // MetroGeneral not accepting
       }))
     );
     console.log('✅ Created 5 hospitals mapped to dedicated hospital staff accounts');
 
-    // Create traffic signals using efficient route mapping with map()
+    // Create traffic signals using precise OSRM mapping
     const allSignalsData = [];
-    SIGNAL_ROUTES.forEach((route, routeIdx) => {
-      route.signals.forEach((signal) => {
-        // Assign different police officers to different routes
-        const policeUserIdx = 2 + (routeIdx % 6);
-        allSignalsData.push({
-          from: route.from,
-          to: route.to,
-          location: signal.location,
-          status: signal.status,
-          coordinates: {
-            type: 'Point',
-            coordinates: [signal.coords[1], signal.coords[0]], // GeoJSON order: [lng, lat]
-          },
-          policeOfficerName: users[policeUserIdx].name,
-          discordUsername: `signal-${allSignalsData.length + 1}`,
-          createdBy: users[policeUserIdx]._id,
+    
+    for (let routeIdx = 0; routeIdx < SIGNAL_ROUTES.length; routeIdx++) {
+      const route = SIGNAL_ROUTES[routeIdx];
+      
+      // Fetch exact OSRM path
+      const url = `https://router.project-osrm.org/route/v1/driving/${route.fromCoords[1]},${route.fromCoords[0]};${route.toCoords[1]},${route.toCoords[0]}?overview=full&geometries=geojson`;
+      const res = await fetch(url);
+      const data = await res.json();
+      
+      let coords = data?.routes?.[0]?.geometry?.coordinates || []; // [[lng, lat]]
+      
+      if (coords.length > 0) {
+        // Pick ~7 points along the exact route polyline
+        const step = Math.max(1, Math.floor(coords.length / 7));
+        const generatedSignals = [];
+        
+        for (let i = 0; i < coords.length; i += step) {
+          if (generatedSignals.length >= 7) break;
+          const [lng, lat] = coords[i];
+          generatedSignals.push({
+            location: `${route.from} Junction ${generatedSignals.length + 1}`,
+            coords: [lat, lng],
+            status: Math.random() > 0.5 ? 'busy' : 'free'
+          });
+        }
+        
+        generatedSignals.forEach((signal, sigIdx) => {
+          // Each route has 3 dedicated officers at indices: routeIdx*3+2 .. routeIdx*3+4
+          const officerBase = 2 + (routeIdx * 3); // users[2..19] are police
+          const policeUserIdx = officerBase + (sigIdx % 3);
+          allSignalsData.push({
+            from: route.from,
+            to: route.to,
+            location: signal.location,
+            status: signal.status,
+            coordinates: {
+              type: 'Point',
+              coordinates: [signal.coords[1], signal.coords[0]], // GeoJSON order: [lng, lat]
+            },
+            policeOfficerName: users[policeUserIdx].name,
+            discordUsername: `signal-${allSignalsData.length + 1}`,
+            createdBy: users[policeUserIdx]._id,
+            policeUserIdx,
+            routeIdx,
+          });
         });
-      });
-    });
+      }
+    }
+    
+    // Set each officer's patrol coords to the first signal assigned to them on their route
+    const assignedOfficers = new Set();
+    for (const sig of allSignalsData) {
+        if (sig.policeUserIdx !== undefined) {
+           if (!assignedOfficers.has(sig.policeUserIdx)) {
+              assignedOfficers.add(sig.policeUserIdx);
+              await User.findByIdAndUpdate(users[sig.policeUserIdx]._id, {
+                  patrolLatitude: sig.coordinates.coordinates[1],
+                  patrolLongitude: sig.coordinates.coordinates[0],
+              });
+           }
+           delete sig.policeUserIdx;
+           delete sig.routeIdx;
+        }
+    }
 
     const signals = await TrafficSignal.insertMany(allSignalsData);
-    console.log(`✅ Created ${signals.length} traffic signals along routes with assigned officers`);
+    console.log(`✅ Fetched OSRM and created ${signals.length} highly accurate traffic signals perfectly aligning with driving routes`);
 
     // Create ambulance routes with patient cases and efficient location mapping using map()
     const routes = await AmbulanceRoute.insertMany(
@@ -444,20 +459,20 @@ const seedDatabase = async () => {
     console.log('• ambulance1@test.com / TestPass123');
     console.log('• ambulance2@test.com / TestPass123');
     console.log('─────────────────────────────────────────');
-    console.log('Police Officers (with patrol coordinates - All in Chennai):');
-    console.log('• Officer Priya Kumar (CHN-001) - Railway Station: officer1@test.com / TestPass123');
-    console.log('• Officer Rajesh Verma (CHN-002) - Anna Salai: officer2@test.com / TestPass123');
-    console.log('• Officer Vikram Patel (CHN-003) - Nungambakkam: officer3@test.com / TestPass123');
-    console.log('• Officer Neha Singh (CHN-004) - Besant Nagar: officer4@test.com / TestPass123');
-    console.log('• Officer Amit Sharma (CHN-005) - T. Nagar: officer5@test.com / TestPass123');
-    console.log('• Officer Sanjay Kumar (CHN-006) - Velachery: officer6@test.com / TestPass123');
+    console.log('Police Officers (with patrol coordinates):');
+    console.log('• Officer Arjun Singh (BNG-001): officer1@test.com / TestPass123');
+    console.log('• Officer Priya Kumar (CHN-001): officer2@test.com / TestPass123');
+    console.log('• Officer Rajesh Verma (DEL-001): officer3@test.com / TestPass123');
+    console.log('• Officer Vikram Patel (MUM-001): officer4@test.com / TestPass123');
+    console.log('• Officer Neha Singh (IND-001): officer5@test.com / TestPass123');
+    console.log('• Officer Amit Sharma (BNG-002): officer6@test.com / TestPass123');
     console.log('─────────────────────────────────────────');
-    console.log('Hospital Staff (Each hospital has dedicated login - All in Chennai):');
-    console.log('• Apollo Hospitals - Dr. Rajesh Kumar: hospital-bangalore@test.com / TestPass123');
-    console.log('• Fortis Malar Hospital - Dr. Ananya Sharma: hospital-chennai@test.com / TestPass123');
-    console.log('• Dr. Mehta\'s Hospitals - Dr. Venkat Krishnan: hospital-delhi@test.com / TestPass123');
-    console.log('• MIOT International - Dr. Harini Iyer: hospital-mumbai@test.com / TestPass123');
-    console.log('• Billroth Hospitals - Dr. Suresh Reddy: hospital-indore@test.com / TestPass123');
+    console.log('Hospital Staff (Each hospital has dedicated login):');
+    console.log('• City Hospital - Dr. Sarah Johnson: hospital-bangalore@test.com / TestPass123');
+    console.log('• St. Mary Medical Center - Dr. Michael Chen: hospital-chennai@test.com / TestPass123');
+    console.log('• Emergency Care Hospital - Dr. Jennifer Brown: hospital-delhi@test.com / TestPass123');
+    console.log('• Metropolitan General Hospital - Dr. Robert Williams: hospital-mumbai@test.com / TestPass123');
+    console.log('• Lakeside Trauma Center - Dr. Lisa Anderson: hospital-indore@test.com / TestPass123');
     console.log('─────────────────────────────────────────');
     console.log('Admin:              admin@test.com / TestPass123');
     console.log('─────────────────────────────────────────');

@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../api/apiClient';
 import '../styles/Dashboard.css';
+import DashboardShell from './layout/DashboardShell';
+import AdminSystemMap from './maps/AdminSystemMap';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [users, setUsers] = useState([]);
   const [signals, setSignals] = useState([]);
   const [hospitals, setHospitals] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [policeOfficers, setPoliceOfficers] = useState([]);
+  const [mapData, setMapData] = useState(null);
   const [activeTab, setActiveTab] = useState('stats');
   const [loading, setLoading] = useState(false);
 
@@ -39,17 +44,26 @@ export default function AdminDashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const [statsRes, usersRes, signalsRes, hospitalsRes] = await Promise.all([
+      const [statsRes, usersRes, signalsRes, hospitalsRes, requestsRes] = await Promise.all([
         apiClient.get('/admin/stats'),
         apiClient.get('/admin/users'),
         apiClient.get('/admin/traffic-signals'),
         apiClient.get('/admin/hospitals'),
+        apiClient.get('/admin/requests/all'),
       ]);
 
       setStats(statsRes.data.stats);
       setUsers(usersRes.data.users);
       setSignals(signalsRes.data.signals);
       setHospitals(hospitalsRes.data.hospitals);
+      setRequests(requestsRes.data.requests);
+      setPoliceOfficers(requestsRes.data.policeOfficers);
+      setMapData({
+        requests: requestsRes.data.requests,
+        policeOfficers: requestsRes.data.policeOfficers,
+        hospitals: requestsRes.data.hospitals,
+        signals: requestsRes.data.signals,
+      });
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     }
@@ -143,27 +157,28 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <h1>Admin Dashboard</h1>
-        <button
-          onClick={() => {
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('user');
-            window.location.href = '/login';
-          }}
-          className="logout-button"
-        >
-          Logout
-        </button>
-      </header>
-
+    <DashboardShell
+      title="System administration"
+      subtitle="Platform statistics, user provisioning, and traffic / hospital registry tools."
+    >
       <div className="admin-tabs">
         <button
           className={`tab-button ${activeTab === 'stats' ? 'active' : ''}`}
           onClick={() => setActiveTab('stats')}
         >
           Dashboard Stats
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'requests' ? 'active' : ''}`}
+          onClick={() => setActiveTab('requests')}
+        >
+          Open Requests
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'map' ? 'active' : ''}`}
+          onClick={() => setActiveTab('map')}
+        >
+          System Map
         </button>
         <button
           className={`tab-button ${activeTab === 'police' ? 'active' : ''}`}
@@ -218,6 +233,72 @@ export default function AdminDashboard() {
               <h3>Total Hospitals</h3>
               <p className="stat-number">{stats.totalHospitals}</p>
             </div>
+          </div>
+        )}
+
+        {activeTab === 'requests' && (
+          <div className="info-section">
+            <h2>Open Requests</h2>
+            <p className="lead">Active and pending ambulance requests with status tracking.</p>
+            {requests.length > 0 ? (
+              <div className="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Patient</th>
+                      <th>Age</th>
+                      <th>Condition</th>
+                      <th>Severity</th>
+                      <th>Pickup Location</th>
+                      <th>Hospital</th>
+                      <th>Status</th>
+                      <th>Requested</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {requests
+                      .filter((req) => ['pending', 'accepted', 'in-transit'].includes(req.status))
+                      .map((req) => (
+                        <tr key={req._id}>
+                          <td>
+                            <strong>{req.patientName}</strong>
+                            {req.ambulanceDriver && <br />}
+                            {req.ambulanceDriver && <span style={{ fontSize: '0.85rem', color: 'var(--color-muted)' }}>{req.ambulanceDriver.name}</span>}
+                          </td>
+                          <td>{req.patientAge}</td>
+                          <td>{req.medicalCondition}</td>
+                          <td>
+                            <span className={`status sev-${req.severity}`} style={{ textTransform: 'capitalize' }}>
+                              {req.severity}
+                            </span>
+                          </td>
+                          <td>{req.pickupLocation}</td>
+                          <td>{req.destinationHospital?.hospitalName || 'Not assigned'}</td>
+                          <td>
+                            <span className={`status ${req.status}`} style={{ textTransform: 'capitalize' }}>
+                              {req.status}
+                            </span>
+                          </td>
+                          <td style={{ fontSize: '0.85rem', color: 'var(--color-muted)' }}>
+                            {new Date(req.requestedAt).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+                {requests.filter((req) => ['pending', 'accepted', 'in-transit'].includes(req.status)).length === 0 && (
+                  <p style={{ marginTop: '16px', color: 'var(--color-muted)' }}>No active requests at the moment.</p>
+                )}
+              </div>
+            ) : (
+              <p>No requests found</p>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'map' && mapData && (
+          <div style={{ height: 'calc(100vh - 200px)', borderRadius: '8px', overflow: 'hidden' }}>
+            <AdminSystemMap data={mapData} />
           </div>
         )}
 
@@ -506,6 +587,6 @@ export default function AdminDashboard() {
           </div>
         )}
       </div>
-    </div>
+    </DashboardShell>
   );
 }

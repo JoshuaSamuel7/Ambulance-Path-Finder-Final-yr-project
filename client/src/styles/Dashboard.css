@@ -43,7 +43,7 @@
 }
 
 .form-section {
-  background-color: #ffe1e1;
+  background-color: inherit;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -102,7 +102,7 @@
 }
 
 .form-group label {
-  color: #61764b;
+  color: white;
   font-weight: bold;
   margin-bottom: 5px;
   font-size: 14px;
@@ -123,7 +123,7 @@
 .form-group textarea:focus {
   outline: none;
   border-color: #90a17d;
-  background-color: #f9f9f9;
+  background-color: inherit;
 }
 
 .submit-button {
@@ -208,7 +208,7 @@
   display: flex;
   gap: 10px;
   padding: 20px 30px 0;
-  background-color: #a3c7d6;
+  background-color: inherit;
   overflow-x: auto;
 }
 
@@ -225,7 +225,7 @@
 }
 
 .tab-button:hover {
-  background-color: #ffe1e1;
+  background-color: #0F131F;
 }
 
 .tab-button.active {
@@ -244,7 +244,7 @@
 }
 
 .stat-card {
-  background-color: #ffe1e1;
+  background-color: #0F131F;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -272,7 +272,8 @@
 
 .table-container {
   overflow-x: auto;
-  background-color: #ffe1e1;
+  background-color: #0F131F;
+  color: wheat;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -283,8 +284,8 @@ table {
 }
 
 table thead {
-  background-color: #90a17d;
-  color: #ffe1e1;
+  background-color: #262f49;
+  color: white;
 }
 
 table th {
@@ -296,12 +297,10 @@ table th {
 table td {
   padding: 12px;
   border-bottom: 1px solid #e0c0c0;
-  color: #333;
+  color: white;
 }
 
-table tbody tr:hover {
-  background-color: #f5e8e8;
-}
+
 
 .loading {
   text-align: center;
@@ -333,3 +332,135 @@ table tbody tr:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* Severity Status Badges */
+.status.sev-critical {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.status.sev-high {
+  background-color: #e67e22;
+  color: white;
+}
+
+.status.sev-medium {
+  background-color: #f39c12;
+  color: white;
+}
+
+.status.sev-low {
+  background-color: #f1c40f;
+  color: #333;
+}
+
+/* Request Status Badges */
+.status.pending {
+  background-color: #f39c12;
+  color: white;
+}
+
+.status.accepted {
+  background-color: #3498db;
+  color: white;
+}
+
+.status.in-transit {
+  background-color: #9b59b6;
+  color: white;
+}
+
+.status.arrived {
+  background-color: #1abc9c;
+  color: white;
+}
+
+.status.completed {
+  background-color: #27ae60;
+  color: white;
+}
+
+.status.cancelled {
+  background-color: #7f8c8d;
+  color: white;
+}
+
+/* Info Section Styling */
+.info-section h2 {
+  color: #61764b;
+  margin-top: 0;
+}
+
+.info-section .lead {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* Admin Map Icons */
+.admin-div-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+  font-size: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-pin-pickup {
+  background-color: #3498db;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+}
+
+.admin-pin-hospital {
+  background-color: #e74c3c;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+}
+
+.admin-pin-police {
+  background-color: #3498db;
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+
+.admin-pin-signal {
+  background-color: #27ae60;
+  width: 22px;
+  height: 22px;
+  font-size: 10px;
+}
+
+.admin-pin-signal.busy {
+  background-color: #e74c3c;
+}
+
+.admin-pin-signal.free {
+  background-color: #27ae60;
+}
+
+.admin-pin-ambulance {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
